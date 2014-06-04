@@ -1,0 +1,31 @@
+#!upstart
+
+description "Start celery workers for nanobilet"
+
+start on (local-filesystems and runlevel [2345])
+stop on runlevel [!2345]
+
+kill timeout 20
+
+
+{% if item.user|default(celery_user) == 'root' %}
+env C_FORCE_ROOT=true
+env HOME=/root
+{% endif %}
+
+env CNAME="{{item.action|default('worker')}}{{item.queue|default('') and ('-' + item.queue) or ''}}"
+env QUEUE="{{ '-q %s' % item.queue if item.queue|default(None) else '' }}"
+env CONCURRENCY="{{ '-c %s' % item.concurrency|default(celery_concurrency) if item.action == 'worker' else '' }}"
+
+setuid {{ item.user|default(celery_user) }}
+
+respawn
+
+limit nofile 65536 65536
+console log
+chdir {{item.app_dir|default(celery_app_dir)}}
+
+exec {{celery_bin}} {{item.action}} \
+    -A {{item.app_module|default(celery_app_module)}} $QUEUE $CONCURRENCY \
+    -f {{item.log_dir|default(celery_log_dir)}}/$CNAME.log -l {{item.log_level|default(celery_log_level)}}
+
