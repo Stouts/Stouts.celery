@@ -36,6 +36,7 @@ celery_app_dir: "{{deploy_src_dir|default('/usr/lib/' + celery_app_name)}}" # Se
 celery_app_module: "{{celery_app_name}}"              # Set default application module
 celery_log_dir: "{{deploy_log_dir|default(celery_app_dir + '/log')}}" # Set default log directory
 celery_log_level: info                                # Set default log level
+celery_log_rotate: yes                                # Enable log rotation
 celery_opts:                                          # Set additional options
 ```
 

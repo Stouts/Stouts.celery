@@ -19,5 +19,8 @@
       enabled=yes
   with_items: celery_run
 
+- name: Setup logrotate
+  template: src=logrotate.conf.j2 dest=/etc/logrotate.d/{{celery_app_name}}-celery.conf
+
 # vim:sw=2:ft=ansible
 
