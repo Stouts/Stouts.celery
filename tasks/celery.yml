@@ -18,6 +18,7 @@
       state=started
       enabled=yes
   with_items: celery_run
+  changed_when: False
 
 - name: Setup logrotate
   template: src=logrotate.conf.j2 dest=/etc/logrotate.d/{{celery_app_name}}-celery.conf
