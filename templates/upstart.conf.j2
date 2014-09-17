@@ -38,4 +38,4 @@ exec {{celery_bin}} {{item.action}} $CELERY_QUEUE_ARG $CELERY_CONCURRENCY_ARG \
                                     --app="$CELERY_APP" \
                                     --workdir="$CELERY_CHDIR" \
                                     --uid="$USER" \
-                                    --gid="$GROUP"
+                                    --gid="$GROUP" {% if item.action == 'beat' %}--schedule={{celery_beat_dbfile}}{% endif %}
