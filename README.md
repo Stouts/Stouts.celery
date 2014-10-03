@@ -2,6 +2,7 @@ Stouts.celery
 =============
 
 [![Build Status](https://travis-ci.org/Stouts/Stouts.celery.png)](https://travis-ci.org/Stouts/Stouts.celery)
+[![Stories in Ready](https://badge.waffle.io/Stouts/Stouts.celery.svg?label=ready&title=Ready)](http://waffle.io/Stouts/Stouts.celery)
 
 Ansible role whith manage [Celery](http://celery.readthedocs.org/en/latest/index.html)
 
