@@ -1,5 +1,9 @@
 ---
 
+- name: Ensure that run directories are exists
+  file: state=directory path={{item.run_dir|default(celery_run_dir)}}
+  with_items: celery_run
+
 - name: Configure celery
   template: >
     src=upstart.conf.j2
