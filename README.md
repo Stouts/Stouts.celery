@@ -2,8 +2,7 @@ Stouts.celery
 =============
 
 [![Build Status](http://img.shields.io/travis/Stouts/Stouts.celery.svg?style=flat-square)](https://travis-ci.org/Stouts/Stouts.celery)
-[![Galaxy](http://img.shields.io/badge/galaxy-Stouts.celery-blue.svg?style=flat-square)](https://galaxy.celery.com/list#/roles/980)
-[![Tag](http://img.shields.io/github/tag/Stouts/Stouts.celery.svg?style=flat-square)]()
+[![Galaxy](http://img.shields.io/badge/galaxy-Stouts.celery-blue.svg?style=flat-square)](https://galaxy.ansible.com/list#/roles/980)
 
 Ansible role whith manage [Celery](http://celery.readthedocs.org/en/latest/index.html)
 
