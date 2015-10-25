@@ -39,6 +39,7 @@ celery_log_dir: "{{deploy_log_dir|default(celery_app_dir + '/log')}}" # Set defa
 celery_log_level: info                                # Set default log level
 celery_log_rotate: yes                                # Enable log rotation
 celery_opts:                                          # Set additional options
+celery_env: {}                                        # Default environment variables
 ```
 
 #### Usage
