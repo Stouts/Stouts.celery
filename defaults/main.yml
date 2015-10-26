@@ -20,6 +20,7 @@ celery_run:                                           # Start celery. See defaul
                                                       # - { action: worker, opts: '--settings=settings.local' }
 
 celery_concurrency: 1                                 # Set default concurence level
+celery_env: {}                                        # Default environment variables
 
 # Directories
 celery_prefix: "{{deploy_dir|default('/usr/lib/' + celery_app_name)}}" # Set to installation prefix

@@ -26,6 +26,11 @@ env CELERY_PID_FILE="{{ item.run_dir|default(celery_run_dir) }}/{{item.action|de
 env CELERY_QUEUE_ARG="{{ '-Q %s' % item.queue if item.queue|default(None) else '' }}"
 env CELERY_CONCURRENCY_ARG="{{ '-c %s' % item.concurrency|default(celery_concurrency) if item.action == 'worker' else '' }}"
 
+{% set env = item.env|default(celery_env) %}
+{% for key in env %}
+env {{key}}={{env[key]}}
+{% endfor %}
+
 console log
 kill timeout 20
 limit nofile 65536 65536
