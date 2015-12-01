@@ -36,7 +36,14 @@ kill timeout 20
 limit nofile 65536 65536
 respawn
 
-exec {{celery_bin}} {{item.action}} $CELERY_QUEUE_ARG $CELERY_CONCURRENCY_ARG \
+script
+
+    {# Run any pre-exec commands we have defined, e.g `. /path/to/your/env_vars/.env`#}
+    {% for line in celery_pre_exec %}
+    {{line}}
+    {% endfor %}
+
+    exec {{celery_bin}} {{item.action}} $CELERY_QUEUE_ARG $CELERY_CONCURRENCY_ARG \
                                     --pidfile="$CELERY_PID_FILE" \
                                     --logfile="$CELERY_LOG_FILE" \
                                     --loglevel="$CELERY_LOG_LEVEL" \
@@ -44,3 +51,5 @@ exec {{celery_bin}} {{item.action}} $CELERY_QUEUE_ARG $CELERY_CONCURRENCY_ARG \
                                     --workdir="$CELERY_CHDIR" \
                                     --uid="$USER" \
                                     --gid="$GROUP" {% if item.action == 'beat' %}--schedule={{celery_beat_dbfile}}{% endif %}
+
+end script

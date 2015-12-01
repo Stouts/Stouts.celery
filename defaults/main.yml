@@ -12,7 +12,7 @@ celery_bin: celery                                    # Celery executable. Ex:
                                                       # celery_bin: /path/to/virtualenv/bin/celery
                                                       # celery_bin: "python /path/to/django/manage.py celery --settings=settings"
                                                       # celery_bin: "/path/to/virtualenv/python /path/to/django/manage.py celery --settings=settings"
-                  
+
 
 celery_run:                                           # Start celery. See default values below. Ex:
 - { action: worker }                                  # - { action: worker, queue: 'hard', concurrency: 4, loglevel: debug, user=deploy }
@@ -20,6 +20,7 @@ celery_run:                                           # Start celery. See defaul
                                                       # - { action: worker, opts: '--settings=settings.local' }
 
 celery_concurrency: 1                                 # Set default concurence level
+celery_pre_exec: []                                   # commands to execute before starting celery, e.g (`. /path/to/env_vars`)
 celery_env: {}                                        # Default environment variables
 
 # Directories
