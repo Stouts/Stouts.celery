@@ -39,7 +39,7 @@ respawn
 script
 
     {# Run any pre-exec commands we have defined, e.g `. /path/to/your/env_vars/.env`#}
-    {% for line in celery_pre_exec %}
+    {% for line in item.celery_pre_exec|default(celery_pre_exec) %}
     {{line}}
     {% endfor %}
 
