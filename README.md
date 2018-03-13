@@ -19,7 +19,7 @@ The role doesnt have any requirements, but [Stouts.deploy](https://github.com/St
 celery_enabled: yes                                   # The role is enabled
 celery_remove: no                                     # Uninstall the role
 
-celery_app_name: "{{deploy_app_name|default('web')}}" # Application name
+celery_app_name: "{{ deploy_app_name|default('web') }}" # Application name
 celery_bin: celery                                    # Celery executable. Ex:
                                                       # celery_bin: /path/to/virtualenv/bin/celery
                                                       # celery_bin: "python /path/to/django/manage.py celery --settings=settings"
@@ -32,10 +32,10 @@ celery_run:                                           # Start celery. See defaul
                                                       # - { action: worker, opts: '--settings=settings.local' }
 
 celery_concurrency: 1                                 # Set default concurence level
-celery_user: "{{deploy_user|default('root')}}"        # Set default user
-celery_app_dir: "{{deploy_src_dir|default('/usr/lib/' + celery_app_name)}}" # Set default application directory
-celery_app_module: "{{celery_app_name}}"              # Set default application module
-celery_log_dir: "{{deploy_log_dir|default(celery_app_dir + '/log')}}" # Set default log directory
+celery_user: "{{ deploy_user|default('root') }}"        # Set default user
+celery_app_dir: "{{ deploy_src_dir|default('/usr/lib/' + celery_app_name) }}" # Set default application directory
+celery_app_module: "{{ celery_app_name }}"              # Set default application module
+celery_log_dir: "{{ deploy_log_dir|default(celery_app_dir + '/log') }}" # Set default log directory
 celery_log_level: info                                # Set default log level
 celery_log_rotate: yes                                # Enable log rotation
 celery_opts:                                          # Set additional options
@@ -57,8 +57,8 @@ Example:
     - Stouts.celery
 
   vars:
-    celery_bin: "{{wsgi_env_dir}}/bin/celery"
-    celery_app_module: "{{deploy_app_name}}.main"
+    celery_bin: "{{ wsgi_env_dir }}/bin/celery"
+    celery_app_module: "{{ deploy_app_name }}.main"
 ```
 
 #### License
