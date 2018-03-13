@@ -16,30 +16,40 @@ The role doesnt have any requirements, but [Stouts.deploy](https://github.com/St
 #### Variables
 
 ```yaml
-celery_enabled: yes                                   # The role is enabled
-celery_remove: no                                     # Uninstall the role
+celery_enabled: yes                                                       # The role is enabled
+celery_remove: no                                                         # Uninstall the role
 
-celery_app_name: "{{ deploy_app_name|default('web') }}" # Application name
-celery_bin: celery                                    # Celery executable. Ex:
-                                                      # celery_bin: /path/to/virtualenv/bin/celery
-                                                      # celery_bin: "python /path/to/django/manage.py celery --settings=settings"
-                                                      # celery_bin: "/path/to/virtualenv/python /path/to/django/manage.py celery --settings=settings"
-                  
+celery_user: "{{ deploy_user|default('root') }}"                          # User to run celery
+celery_group: "{{ deploy_group|default('root') }}"                        # Group to run celery
 
-celery_run:                                           # Start celery. See default values below. Ex:
-- { action: worker }                                  # - { action: worker, queue: 'hard', concurrency: 4, loglevel: debug, user=deploy }
-- { action: beat }                                    # - { action: beat, loglevel: debug }
-                                                      # - { action: worker, opts: '--settings=settings.local' }
+celery_app_name: "{{ deploy_app_name|default('web') }}"                   # Application name
+celery_app_module: "{{ celery_app_name }}"                                # Set to application module
+celery_bin: celery                                                        # Celery executable. Ex:
+                                                                            # celery_bin: /path/to/virtualenv/bin/celery
+                                                                            # celery_bin: "python /path/to/django/manage.py celery --settings=settings"
+                                                                            # celery_bin: "/path/to/virtualenv/python /path/to/django/manage.py celery --settings=settings"
 
-celery_concurrency: 1                                 # Set default concurence level
-celery_user: "{{ deploy_user|default('root') }}"        # Set default user
-celery_app_dir: "{{ deploy_src_dir|default('/usr/lib/' + celery_app_name) }}" # Set default application directory
-celery_app_module: "{{ celery_app_name }}"              # Set default application module
-celery_log_dir: "{{ deploy_log_dir|default(celery_app_dir + '/log') }}" # Set default log directory
-celery_log_level: info                                # Set default log level
-celery_log_rotate: yes                                # Enable log rotation
-celery_opts:                                          # Set additional options
-celery_env: {}                                        # Default environment variables
+
+celery_run:                                                               # Start celery. See default values below. Ex:
+- { action: worker }                                                      # - { action: worker, queue: 'hard', concurrency: 4, loglevel: debug, user=deploy }
+- { action: beat }                                                        # - { action: beat, loglevel: debug }
+                                                                          # - { action: worker, opts: '--settings=settings.local' }
+
+celery_concurrency: 1                                                     # Set default concurence level
+celery_pre_exec: []                                                       # commands to execute before starting celery, e.g (`. /path/to/env_vars`)
+celery_env: {}                                                            # Default environment variables
+
+# Directories
+celery_prefix: "{{ deploy_dir|default('/usr/lib/' + celery_app_name) }}"  # Set to installation prefix
+celery_work_dir: "{{ deploy_src_dir|default(celery_prefix + '/src') }}"   # Set to work directory
+celery_run_dir: "{{ deploy_run_dir|default(celery_prefix + '/run') }}"    # Set to run directory
+
+celery_beat_dbfile: "{{ celery_run_dir }}/beat-schedule"                  # Put celery db file here
+
+# Logging
+celery_log_dir: "{{ deploy_log_dir|default(celery_prefix + '/log') }}"    # Set default log directory
+celery_log_level: info                                                    # Set default log level
+celery_log_rotate: yes                                                    # Enable log rotation
 ```
 
 #### Usage
