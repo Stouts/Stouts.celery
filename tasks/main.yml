@@ -1,7 +1,7 @@
 ---
 
 - include: celery.yml
-  when: "{{ celery_enabled }} and not {{ celery_remove }}"
+  when: celery_enabled and not celery_remove
   tags: [celery]
 
 - include: remove.yml
